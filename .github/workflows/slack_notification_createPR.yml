@@ -23,7 +23,7 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "New pull request created: *${{ github.event.pull_request.title }}*\nPull Request has been assigned to: ${{ github.event.sender.login }}*\n${{ github.event.pull_request.html_url }}\nReviewers: ${{ join(github.event.pull_request.requested_reviewers.*.login, ', ') || 'No reviewers assigned' }}"
+                  "text": "New pull request created: *${{ github.event.pull_request.title }}*\nPull Request has been assigned to: ${{ github.event.sender.login }}*\n${{ github.event.pull_request.html_url }}"
                 }
               }
             ],
