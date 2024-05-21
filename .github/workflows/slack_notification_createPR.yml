@@ -1,0 +1,31 @@
+name: Demo - Send notification on Slack when new PR is created
+
+env:
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK}}
+ 
+on:
+  pull_request:
+    types:
+      - opened
+
+jobs:
+  notify-reviewers:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Notify Slack
+      uses: slackapi/slack-github-action@v1.24.0
+      with:
+        payload: |
+          {
+            "blocks": [
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "New pull request created: *${{ github.event.pull_request.title }}*\nPull Request has been assigned to: ${{ github.event.sender.login }}*\n${{ github.event.pull_request.html_url }}\nReviewers: ${{ join(github.event.pull_request.requested_reviewers.*.login, ', ') || 'No reviewers assigned' }}"
+                }
+              }
+            ],
+            "icon_emoji": ":bell:"
+          }
